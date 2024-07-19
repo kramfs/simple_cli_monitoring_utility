@@ -1,0 +1,15 @@
+services:
+  api:
+    #image: python:latest
+    image: monitoring
+    container_name: api
+    #command: ["python", "api", "--proto", "4", "80"]
+    command: ["python", "cpx_server.py", "--proto", "4", "80"]
+    restart: always
+    ports:
+      - "9001:80"
+  monitoring:
+    image: monitoring
+    container_name: monitoring
+    tty: true             # keep the container running
+    restart: on-failure
