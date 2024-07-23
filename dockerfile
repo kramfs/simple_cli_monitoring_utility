@@ -8,6 +8,7 @@ COPY src/requirements.txt ./
 
 RUN pip install -r requirements.txt
 
+# Use a non-privilege user
 USER nobody
 
 # Bundle app source
