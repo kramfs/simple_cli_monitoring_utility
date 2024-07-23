@@ -1,6 +1,6 @@
 FROM python:slim
 
-# Create app directory
+# Set app working directory
 WORKDIR /app
 
 # Install app dependencies

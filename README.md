@@ -184,14 +184,14 @@ $ docker build . -t monitoring --no-cache
  => => naming to docker.io/library/monitoring                                                                                                                                  0.0s
 ````
 
-If there's no error on the build, we should be able to see our newly create image now:
+If there's no error on the build, we should be able to see our newly created image:
 ````
 $ docker image ls
 REPOSITORY                    TAG             IMAGE ID       CREATED        SIZE
 monitoring                    latest          11a0d3490542   2 hours ago    143MB
 ````
 
-Ok looking great so far, let's run it:
+Ok looking great so far, let's run it. The docker compose file `compose.yaml` uses the image tagged as monitoring to be present locally:
 ````
 $ docker compose up
 [+] Running 3/3
