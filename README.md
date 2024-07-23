@@ -285,6 +285,7 @@ options:
     PermissionsService        healthy         
     ----------------------------------
 
+    # Increase the threshold checking if there are 8 healthy instances
     $ docker exec -it monitoring python monitoring.py api --healthyInstances 8 --healthCheck
     -------------------------------------
     SERVICE                   STATUS    |
@@ -305,36 +306,35 @@ options:
 4. Have the ability to track and print CPU/Memory of all instances of a given service over
 time (until the command is stopped, e.g. ctrl + c). For this case, we'll use `--monitorService IdService`. It will loop over and run every 5 seconds until the command is stopped.
 
-````
-$ docker exec -it monitoring python monitoring.py api -ms IdService  
+    ````
+    $ docker exec -it monitoring python monitoring.py api -ms IdService  
 
-------------------------------------------------------------------------
-IP               SERVICE                   CPU      MEMORY   STATUS    |
-------------------------------------------------------------------------
-10.58.1.64       IdService                 45%      11%      healthy 
-10.58.1.142      IdService                 7%       38%      healthy 
-10.58.1.133      IdService                 86%      19%      --unhealthy
-10.58.1.62       IdService                 39%      26%      healthy 
-10.58.1.123      IdService                 49%      72%      healthy 
-10.58.1.71       IdService                 42%      76%      --unhealthy
-10.58.1.78       IdService                 88%      51%      --unhealthy
-10.58.1.117      IdService                 50%      99%      --unhealthy
-10.58.1.51       IdService                 22%      45%      healthy 
-10.58.1.14       IdService                 30%      74%      healthy 
-10.58.1.86       IdService                 21%      55%      healthy 
-10.58.1.16       IdService                 25%      69%      healthy 
-10.58.1.92       IdService                 63%      33%      healthy 
-10.58.1.112      IdService                 11%      98%      --unhealthy
-10.58.1.125      IdService                 48%      84%      --unhealthy
-10.58.1.96       IdService                 57%      46%      healthy 
-10.58.1.40       IdService                 98%      93%      --unhealthy
-10.58.1.116      IdService                 86%      63%      --unhealthy
-10.58.1.120      IdService                 73%      25%      healthy 
-10.58.1.30       IdService                 26%      24%      healthy 
-10.58.1.24       IdService                 16%      19%      healthy 
-------------------------------------------------------------------------
-
-````
+    ------------------------------------------------------------------------
+    IP               SERVICE                   CPU      MEMORY   STATUS    |
+    ------------------------------------------------------------------------
+    10.58.1.64       IdService                 45%      11%      healthy 
+    10.58.1.142      IdService                 7%       38%      healthy 
+    10.58.1.133      IdService                 86%      19%      --unhealthy
+    10.58.1.62       IdService                 39%      26%      healthy 
+    10.58.1.123      IdService                 49%      72%      healthy 
+    10.58.1.71       IdService                 42%      76%      --unhealthy
+    10.58.1.78       IdService                 88%      51%      --unhealthy
+    10.58.1.117      IdService                 50%      99%      --unhealthy
+    10.58.1.51       IdService                 22%      45%      healthy 
+    10.58.1.14       IdService                 30%      74%      healthy 
+    10.58.1.86       IdService                 21%      55%      healthy 
+    10.58.1.16       IdService                 25%      69%      healthy 
+    10.58.1.92       IdService                 63%      33%      healthy 
+    10.58.1.112      IdService                 11%      98%      --unhealthy
+    10.58.1.125      IdService                 48%      84%      --unhealthy
+    10.58.1.96       IdService                 57%      46%      healthy 
+    10.58.1.40       IdService                 98%      93%      --unhealthy
+    10.58.1.116      IdService                 86%      63%      --unhealthy
+    10.58.1.120      IdService                 73%      25%      healthy 
+    10.58.1.30       IdService                 26%      24%      healthy 
+    10.58.1.24       IdService                 16%      19%      healthy 
+    ------------------------------------------------------------------------
+    ````
 
 
 # Future Improvements:
