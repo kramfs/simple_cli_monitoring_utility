@@ -1,5 +1,8 @@
 FROM python:slim
 
+LABEL org.opencontainers.image.authors=""
+LABEL description="A utility to interact with the service discovery API and allows to efficiently monitor deployed resources."
+
 # Set app working directory
 WORKDIR /app
 
