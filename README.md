@@ -1,5 +1,5 @@
 # Background
-We have mock cloud service provider that features the following characteristics:
+We have a mock cloud service provider that features the following characteristics:
 
 1. Offers an API for fetching all running servers. Clients can access `/servers` to get a list of available running instances.
 
