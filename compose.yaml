@@ -1,4 +1,14 @@
 services:
+  monitoring:
+    #image: monitoring
+    build:
+      context: .
+      dockerfile: dockerfile
+      tags:
+        - "monitoring:latest"
+    container_name: monitoring
+    tty: true             # keep the container running
+    restart: on-failure
   api:
     #image: python:latest
     image: monitoring
@@ -8,8 +18,3 @@ services:
     restart: always
     ports:
       - "9001:80"
-  monitoring:
-    image: monitoring
-    container_name: monitoring
-    tty: true             # keep the container running
-    restart: on-failure

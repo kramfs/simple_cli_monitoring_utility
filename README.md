@@ -162,26 +162,37 @@ $ tree
 - `monitoring.py` - Our utility for interacting with the service discovery API. This will be copied to the image.
 - `requirements.txt` - Required libraries to be installed as part of the build
 
-To build and create the container:
+To build, create and run the container, we use docker compose with the build context:
 ````
-$ docker build . -t monitoring --no-cache
-[+] Building 3.1s (10/10) FINISHED                                                                                                                                   docker:default
- => [internal] load build definition from dockerfile                                                                                                                           0.0s
- => => transferring dockerfile: 281B                                                                                                                                           0.0s
- => [internal] load metadata for docker.io/library/python:slim                                                                                                                 0.0s
- => [internal] load .dockerignore                                                                                                                                              0.0s
- => => transferring context: 145B                                                                                                                                              0.0s
- => [1/5] FROM docker.io/library/python:slim                                                                                                                                   0.0s
- => [internal] load build context                                                                                                                                              0.0s
- => => transferring context: 12.77kB                                                                                                                                           0.0s
- => CACHED [2/5] WORKDIR /app                                                                                                                                                  0.0s
- => [3/5] COPY src/requirements.txt ./                                                                                                                                         0.1s
- => [4/5] RUN pip install -r requirements.txt                                                                                                                                  2.8s
- => [5/5] COPY src/ /app                                                                                                                                                       0.0s
- => exporting to image                                                                                                                                                         0.1s
- => => exporting layers                                                                                                                                                        0.1s
- => => writing image sha256:be72abfcc7d975097f590ae7d5dcbf94e375545708e4556b8f9cdab2b3941a61                                                                                   0.0s
- => => naming to docker.io/library/monitoring                                                                                                                                  0.0s
+❯ docker compose up --build
+[+] Building 2.0s (11/11) FINISHED                                                                            docker:default
+ => [monitoring internal] load build definition from dockerfile                                                         0.0s
+ => => transferring dockerfile: 502B                                                                                    0.0s
+ => [monitoring internal] load metadata for docker.io/library/python:alpine3.12                                         1.6s
+ => [monitoring internal] load .dockerignore                                                                            0.0s
+ => => transferring context: 145B                                                                                       0.0s
+ => [monitoring internal] load build context                                                                            0.0s
+ => => transferring context: 374B                                                                                       0.0s
+ => [monitoring 1/5] FROM docker.io/library/python:alpine3.12@sha256:7f73901e568630443fc50e358b76603492e89c9bf330caf68  0.0s
+ => CACHED [monitoring 2/5] WORKDIR /app                                                                                0.0s
+ => CACHED [monitoring 3/5] COPY src/requirements.txt ./                                                                0.0s
+ => CACHED [monitoring 4/5] RUN pip install -r requirements.txt                                                         0.0s
+ => CACHED [monitoring 5/5] COPY src/ /app                                                                              0.0s
+ => [monitoring] exporting to image                                                                                     0.0s
+ => => exporting layers                                                                                                 0.0s
+ => => writing image sha256:778556823b4a2301674fe61f160418e3ee11cc0a14b9f7f97f45b002f58f327e                            0.0s
+ => => naming to docker.io/library/simple_cli_monitoring_utility-monitoring                                             0.0s
+ => => naming to docker.io/library/monitoring:latest                                                                    0.0s
+ => [monitoring] resolving provenance for metadata file                                                                 0.0s
+[+] Running 3/3
+ ✔ Network simple_cli_monitoring_utility_default  Created                                                               0.4s 
+ ✔ Container monitoring                           Created                                                               0.2s 
+ ✔ Container api                                  Created                                                               0.2s 
+Attaching to api, monitoring
+monitoring  | Python 3.9.5 (default, May  4 2021, 18:42:26) 
+monitoring  | [GCC 9.3.0] on linux
+monitoring  | Type "help", "copyright", "credits" or "license" for more information.
+
 ````
 
 If there's no error on the build, we should be able to see our newly created image:
@@ -189,18 +200,6 @@ If there's no error on the build, we should be able to see our newly created ima
 $ docker image ls
 REPOSITORY                    TAG             IMAGE ID       CREATED        SIZE
 monitoring                    latest          11a0d3490542   2 hours ago    143MB
-````
-
-Ok looking great so far, let's run it. The docker compose file `compose.yaml` uses the image tagged as monitoring to be present locally:
-````
-$ docker compose up
-[+] Running 3/3
- ✔ Network simple_cli_monitoring_utility_default  Created                                                                                                                       0.2s 
- ✔ Container monitoring                           Created                                                                                                                       0.1s 
- ✔ Container api                                  Created                                                                                                                       0.1s 
-Attaching to api, monitoring
-monitoring  | Python 3.12.4 (main, Jul 10 2024, 19:07:59) [GCC 12.2.0] on linux
-monitoring  | Type "help", "copyright", "credits" or "license" for more information.
 ````
 
 We should have two running containers now, both are using the same container image tagged as `monitoring`:
